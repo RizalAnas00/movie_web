@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'tmdb' => [
+    'endpoint' => env('TMDB_ENDPOINT'),
+    'api' => env('TMDB_APP_KEY'),
+    ],
+
 ];
