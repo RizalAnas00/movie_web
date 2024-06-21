@@ -9,7 +9,10 @@ export default {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        museo: ['MuseoModerno', 'Arial','sans-serif'],
+    },
   },
   plugins: [],
-}
+}}
