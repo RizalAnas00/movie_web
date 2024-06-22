@@ -17,7 +17,7 @@
             <div class="flex md:order-2">
                 <div class="relative hidden md:block">
                     <form action="{{ route('movie.search') }}" method="GET" class="flex items-center w-full relative">
-                        <input type="text" name="title" class="block max-w-full p-2 pr-16 md:pr-72 lg:pr-96 text-sm font-bold text-black border border-gray-900 shadow-[#222831] shadow-md shadow-inner rounded-lg bg-[#D65A31] focus:ring-blue-500 focus:border-blue-500 placeholder-black placeholder:opacity-35" placeholder="Find Movies By Title...">
+                        <input type="text" name="title" class="block max-w-full p-2 pr-16 md:pr-72 lg:pr-96 text-sm font-bold text-black border border-gray-900 shadow-[#222831] shadow-inner rounded-lg bg-[#D65A31] focus:ring-blue-500 focus:border-blue-500 placeholder-black placeholder:opacity-35" placeholder="Find Movies By Title...">
                         <div class="absolute inset-y-0 right-3 flex items-center pl-3 pointer-events-none">
                             <img src="{{ asset('images/searchlogo.svg') }}" class="size-7 text-gray-500 dark:text-gray-400">
                         </div>
@@ -57,16 +57,24 @@
         @yield('content')
     </main>
     
-    <footer class="bg-gray-800 p-4 mt-8">
+    <footer class="bg-gray-800 p-5 mt-8 h-full">
         <div class="text-center">
-            <p class="font-museo text-2xl">Get In Touch</p>
-            <div class="flex justify-center space-x-4 my-2">
-                <a href="#" class="hover:text-gray-400">FB</a>
-                <a href="#" class="hover:text-gray-400">IG</a>
-                <a href="#" class="hover:text-gray-400">TW</a>
-                <a href="#" class="hover:text-gray-400">IN</a>
+            <p class="font-museo lg:text-4xl max-sm:text-3xl">Get In Touch</p>
+            <div class="flex justify-center space-x-5 my-3">
+                <a href="https://www.instagram.com/rizalsaja___" >
+                    <img src="{{ asset('images/insta.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
+                </a>
+                <a href="https://wa.me/+6285809040598" >
+                    <img src="{{ asset('images/wa.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
+                </a>
+                <a href="https://github.com/Rizalanas00" >
+                    <img src="{{ asset('images/github.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
+                </a>
+                <a href="https://www.linkedin.com/in/Rizal-Anas" > 
+                    <img src="{{ asset('images/linkedin.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
+                </a>
             </div>
-            <p>&copy; 2024 MovieList</p>
+            <p class="text-gray-400 text-sm">&copy; 2024 Project by Rizal Anas</p>
         </div>
     </footer>
 </body>
