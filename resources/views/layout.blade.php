@@ -58,10 +58,10 @@
             @yield('content')
     </main>
     
-    <footer class="bg-gray-800 p-5 h-full">
+    <footer class="bg-[#464A52] p-5 h-full">
         <div class="text-center">
             <p class="font-museo lg:text-4xl max-sm:text-3xl">Get In Touch</p>
-            <div class="flex justify-center space-x-5 my-3">
+            <div class="flex justify-center space-x-5 my-4">
                 <a href="https://www.instagram.com/rizalsaja___" >
                     <img src="{{ asset('images/insta.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
                 </a>
@@ -75,7 +75,8 @@
                     <img src="{{ asset('images/linkedin.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
                 </a>
             </div>
-            <p class="text-gray-400 text-sm">&copy; 2024 Project by Rizal Anas</p>
+            <p class="text-gray-400 text-sm pt-3">&copy; 2024 Project by Rizal Anas</p>
+            <p class="text-gray-400 text-sm mt-1">&copy; TMBD API 2024</p>
         </div>
     </footer>
 </body>

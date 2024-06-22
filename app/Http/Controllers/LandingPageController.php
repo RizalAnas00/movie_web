@@ -46,13 +46,14 @@ class LandingPageController extends Controller
 
     public function showRandomMovie()
     {
-       // Fetch movies with a rating above 7
-       $response = Http::asJson()
-       ->get(config('services.tmdb.endpoint') . 'discover/movie', [
-           'api_key' => config('services.tmdb.api'),
-           'vote_average.gte' => 7,
-           'sort_by' => 'vote_average.desc'
-       ]);
+        // Fetch movies with a rating above 7
+        $response = Http::asJson()
+            ->get(config('services.tmdb.endpoint') . 'discover/movie', [
+                'api_key' => config('services.tmdb.api'),
+                'vote_average.gte' => 4,
+                'vote_count.gte' => 200,
+                'sort_by' => 'vote_count.desc'
+            ]);
 
         if ($response->failed()) {
             return redirect()->route('landing_page')->with('error', 'Failed to fetch movie data.');
@@ -68,8 +69,20 @@ class LandingPageController extends Controller
         if (count($moviesWithPosters) > 0) {
             // Select a random movie from the filtered list
             $data = $moviesWithPosters[array_rand($moviesWithPosters)];
-            return view('landing_page', compact('data'));
-        } else {
+
+            // Fetch movie credits
+            $creditsResponse = Http::asJson()->get(config('services.tmdb.endpoint') . 'movie/' . $data['id'] . '/credits?api_key=' . config('services.tmdb.api'));
+            $creditsData = $creditsResponse->json();
+
+            // Filter the director
+            $director = collect($creditsData['crew'])->firstWhere('job', 'Director');
+
+            return view('landing_page', [
+                'data' => $data,
+                'director' => $director ? $director['name'] : 'Director not available',
+            ]);
+        } 
+        else {
             return redirect()->route('landing_page')->with('error', 'No high-rated movies with posters found.');
         }
     }
