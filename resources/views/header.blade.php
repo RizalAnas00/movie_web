@@ -8,7 +8,7 @@
     @vite('resources/css/app.css')
 </head>
 <body class="bg-[#222831] text-white">
-    <header class="bg-[#464A52] p-2 shadow-[black] shadow-sm">
+    <header class="bg-[#464A52] p-2 top-0 w-full shadow-[black] shadow-sm sticky z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <div class="flex items-center">
                 <h1 class="text-2xl lg:text-4xl font-semibold font-museo">MovieList</h1>
@@ -53,32 +53,5 @@
             </div>
         </div>
     </header>
-    
-    <main class="max-w-screen-2xl xl mx-auto mb-auto">
-            @yield('content')
-    </main>
-    
-    <footer class="bg-[#464A52] p-5 h-full">
-        <div class="text-center">
-            <p class="font-museo lg:text-4xl max-sm:text-3xl">Get In Touch</p>
-            <div class="flex justify-center space-x-5 my-4">
-                <a href="https://www.instagram.com/rizalsaja___" >
-                    <img src="{{ asset('images/insta.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
-                </a>
-                <a href="https://wa.me/+6285809040598" >
-                    <img src="{{ asset('images/wa.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
-                </a>
-                <a href="https://github.com/Rizalanas00" >
-                    <img src="{{ asset('images/github.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
-                </a>
-                <a href="https://www.linkedin.com/in/Rizal-Anas" > 
-                    <img src="{{ asset('images/linkedin.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
-                </a>
-            </div>
-            <p class="text-gray-400 text-sm pt-3">&copy; 2024 Project by Rizal Anas</p>
-            <p class="text-gray-400 text-sm mt-1">&copy; TMBD API 2024</p>
-        </div>
-    </footer>
-</body>
-</html>
 
+    

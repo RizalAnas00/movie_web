@@ -1,45 +1,108 @@
-@extends('layout')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Detail</title>
+    @vite('resources/css/app.css')
+</head>
+<body class="flex flex-col min-h-screen bg-gray-900 relative">
 
-@section('title', 'Home')
+@include('header')
 
-@section('content')
-<div class="relative flex mb-auto items-center justify-center h-screen bg-transparent py-4 sm:pt-0">
-    <div class="max-w-full mx-auto p-7 h-full w-full">
+<!-- Background with gradient and blur -->
+<div class="absolute inset-0 bg-gradient-to-b from-[#d65a3183] to-transparent backdrop-blur-xl -z-10"></div>
 
-        <!-- Movie Card -->
-        @if(isset($data))
-        <div class="relative bg-transparent overflow-hidden shadow sm:rounded-lg h-full w-full">
-            <img src="https://www.themoviedb.org/t/p/w1280{{ $data['backdrop_path'] ?? '' }}" alt="Poster" class="absolute top-0 left-0 w-full h-full object-cover">
-            <div class="absolute bottom-0 left-0 h-3/6 w-full bg-gradient-to-t from-[#D65A31] to-transparent p-7 text-center">
-                <h2 class="lg:text-3xl sm:text-xl text-white font-bold lg:mt-20 max-sm:mt-36">{{ $data['title'] ?? 'Title not available' }}</h2>
-                <h1 class="lg:text-2xl sm:text-lg text-white font-md mt-2">({{ isset($data['release_date']) ? date('Y', strtotime($data['release_date'])) : 'N/A' }})</h1>
-                <h3 class="lg:text-xl sm:text-md text-white font-semibold mt-2">Directed by: {{ $director }}</h3>
-                <p class="leading-6 m-3 text-gray-300 max-lg:text-wrap lg:overflow-hidden max-sm:truncate">{{ $data['overview'] ?? 'Overview not available' }}</p>
-            </div>
-        </div>
 
-        <!-- Additional Content -->
-        <div class="text-center mt-10">
-            <h2 class="text-3xl text-white">You want some more?</h2>
-            <p class="text-lg text-gray-300 mt-2">In case you love movies like {{ $data['title'] ?? 'this one' }}</p>
 
-            <!-- Recommended Movies -->
-            <div class="mt-5 flex overflow-x-scroll space-x-4 ">
-                @foreach($recommendations as $movie)
-                <div class="flex-none w-80 bg-gray-800 rounded-xl shadow-lg h-full">
-                    <img src="https://www.themoviedb.org/t/p/w220_and_h330_face{{ $movie['poster_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
-                    <div class="p-4">
-                        <h3 class="text-lg text-white mt-2">{{ $movie['title'] }}</h3>
-                        <p class="text-sm text-gray-400">({{ date('Y', strtotime($movie['release_date'])) }})</p>
-                    </div>
+<main class="flex-grow p-4">
+    <div class="relative items-center justify-center bg-transparent py-4 sm:pt-0">
+        <div class="max-w-full flex-grow mx-auto p-7 w-full min-h-screen">
+
+            <!-- Movie Card -->
+            @if(isset($data))
+            <div class="relative bg-transparent overflow-hidden shadow sm:rounded-lg lg:rounded-2xl w-full h-auto">
+                <img src="https://www.themoviedb.org/t/p/w1280{{ $data['backdrop_path'] ?? '' }}" alt="Poster" class="w-full h-auto object-cover">
+                <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#D65A31] to-transparent p-7 text-center">
+                    <h2 class="lg:text-3xl sm:text-xl text-white font-bold lg:mt-20 max-sm:mt-36">{{ $data['title'] ?? 'Title not available' }}</h2>
+                    <h1 class="lg:text-2xl sm:text-lg text-white font-md mt-2">({{ isset($data['release_date']) ? date('Y', strtotime($data['release_date'])) : 'N/A' }})</h1>
+                    <h3 class="lg:text-xl sm:text-md text-white font-semibold mt-2">Directed by: {{ $director }}</h3>
+                    <p class="leading-6 m-3 text-gray-300 max-lg:text-wrap lg:overflow-hidden max-sm:truncate">{{ $data['overview'] ?? 'Overview not available' }}</p>
                 </div>
-                @endforeach
             </div>
-        </div>
-        @else
-             <p class="text-center text-gray-500 dark:text-gray-400">No movie data available.</p>
-        @endif
 
+            <div>
+                <h1 class="text-white text-2xl lg:text-4xl font-bold font-mono text-center pt-20">You Want Some More?</h1>
+                <h2 class="text-white text-lg lg:text-2xl font-normal font-mono text-left pb-4 pt-12">In case you love movies like<span class="font-bold text-xl lg:text-3xl text-[#D65A31]"> {{ $data['title'] ?? 'Title not available' }} </span> </h2>
+            </div>
+
+            <!-- Additional Content -->
+            <div class="relative text-center w-full">
+                
+                {{-- button scroll --}}
+                <button class="absolute top-1/2 left-4 transform -translate-y-1/2 hover:bg-black hover:bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeft">
+                    <img src={{ asset('images/left.svg') }} alt="Arrow Left" class="size-7 hover:size-8">
+                </button>
+
+                <div class="pt-4 flex overflow-x-auto gap-5 no-scrollbar container scroll-smooth" id="recommendation-list">
+                    @foreach($recommendations as $movie)
+                    <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden">
+                        <img src="https://www.themoviedb.org/t/p/w500{{ $movie['backdrop_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 text-center backdrop-blur-sm pointer-events-none">
+                            <h3 class="text-lg text-white font-bold">{{ $movie['title'] }}</h3>
+                            <p class="text-sm text-gray-400">({{ date('Y', strtotime($movie['release_date'])) }})</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+
+                {{-- button scroll --}}
+                <button class="absolute top-1/2 right-4 transform -translate-y-1/2 hover:bg-black hover:bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRight">
+                    <img src={{ asset('images/right.svg') }} alt="Arrow Right" class="size-7 hover:size-8">
+                </button>
+            </div>
+            @else
+                <p class="text-center text-gray-500 dark:text-gray-400">No movie data available.</p>
+            @endif
+        </div>
     </div>
-</div>
-@endsection
+</main>
+
+@include('footer')
+
+{{-- button logic scroll --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rightButtons = Array.from(document.getElementsByClassName('slideRight'));
+        const leftButtons = Array.from(document.getElementsByClassName('slideLeft'));
+        const containers = Array.from(document.getElementsByClassName('container'));
+
+        let index = 0;
+        for (const rightButton of rightButtons) {
+            const container = containers[index];
+            rightButton.addEventListener("click", function () {
+                container.scrollBy({
+                    left: 1200,
+                    behavior: 'smooth'
+                });
+            });
+            index++;
+        }
+
+        index = 0;
+        for (const leftButton of leftButtons) {
+            const container = containers[index];
+            leftButton.addEventListener("click", function () {
+                container.scrollBy({
+                    left: -1200,
+                    behavior: 'smooth'
+                });
+            });
+            index++;
+        }
+    });
+</script>
+{{-- button logic scroll --}}
+
+</body>
+</html>
