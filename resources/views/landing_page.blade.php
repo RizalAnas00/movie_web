@@ -13,8 +13,6 @@
 <!-- Background with gradient and blur -->
 <div class="absolute inset-0 bg-gradient-to-b from-[#d65a3183] to-transparent backdrop-blur-xl -z-10"></div>
 
-
-
 <main class="flex-grow p-4">
     <div class="relative items-center justify-center bg-transparent py-4 sm:pt-0">
         <div class="max-w-full flex-grow mx-auto p-7 w-full min-h-screen">
@@ -37,14 +35,14 @@
             </div>
 
             <!-- Additional Content -->
-            <div class="relative text-center w-full">
-                
-                {{-- button scroll --}}
-                <button class="absolute top-1/2 left-4 transform -translate-y-1/2 hover:bg-black hover:bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeft">
-                    <img src={{ asset('images/left.svg') }} alt="Arrow Left" class="size-7 hover:size-8">
+            <div class="relative w-full">
+
+                <!-- Scroll Buttons -->
+                <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeft">
+                    <img src="{{ asset('images/left.svg') }}" alt="Arrow Left" class="w-6 h-6">
                 </button>
 
-                <div class="pt-4 flex overflow-x-auto gap-5 no-scrollbar container scroll-smooth" id="recommendation-list">
+                <div class="pt-4 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
                     @foreach($recommendations as $movie)
                     <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden">
                         <img src="https://www.themoviedb.org/t/p/w500{{ $movie['backdrop_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
@@ -56,9 +54,8 @@
                     @endforeach
                 </div>
 
-                {{-- button scroll --}}
-                <button class="absolute top-1/2 right-4 transform -translate-y-1/2 hover:bg-black hover:bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRight">
-                    <img src={{ asset('images/right.svg') }} alt="Arrow Right" class="size-7 hover:size-8">
+                <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRight">
+                    <img src="{{ asset('images/right.svg') }}" alt="Arrow Right" class="w-6 h-6">
                 </button>
             </div>
             @else
@@ -70,39 +67,31 @@
 
 @include('footer')
 
-{{-- button logic scroll --}}
+<!-- Button Logic Scroll -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const rightButtons = Array.from(document.getElementsByClassName('slideRight'));
-        const leftButtons = Array.from(document.getElementsByClassName('slideLeft'));
-        const containers = Array.from(document.getElementsByClassName('container'));
+        const rightButtons = document.querySelectorAll('.slideRight');
+        const leftButtons = document.querySelectorAll('.slideLeft');
+        const recommendationList = document.getElementById('recommendation-list');
 
-        let index = 0;
-        for (const rightButton of rightButtons) {
-            const container = containers[index];
-            rightButton.addEventListener("click", function () {
-                container.scrollBy({
-                    left: 1200,
+        rightButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                recommendationList.scrollBy({
+                    left: 800, // Adjust the value based on your needs
                     behavior: 'smooth'
                 });
             });
-            index++;
-        }
+        });
 
-        index = 0;
-        for (const leftButton of leftButtons) {
-            const container = containers[index];
-            leftButton.addEventListener("click", function () {
-                container.scrollBy({
-                    left: -1200,
+        leftButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                recommendationList.scrollBy({
+                    left: -800, // Adjust the value based on your needs
                     behavior: 'smooth'
                 });
             });
-            index++;
-        }
+        });
     });
 </script>
-{{-- button logic scroll --}}
-
 </body>
 </html>
