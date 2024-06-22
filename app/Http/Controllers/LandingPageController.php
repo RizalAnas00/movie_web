@@ -43,4 +43,34 @@ class LandingPageController extends Controller
 
         return view('rslt_search_movie', compact('movies'));
     }
+
+    public function showRandomMovie()
+    {
+       // Fetch movies with a rating above 7
+       $response = Http::asJson()
+       ->get(config('services.tmdb.endpoint') . 'discover/movie', [
+           'api_key' => config('services.tmdb.api'),
+           'vote_average.gte' => 7,
+           'sort_by' => 'vote_average.desc'
+       ]);
+
+        if ($response->failed()) {
+            return redirect()->route('landing_page')->with('error', 'Failed to fetch movie data.');
+        }
+
+        $movies = $response->json()['results'];
+
+        // Filter movies that have posters
+        $moviesWithPosters = array_filter($movies, function ($movie) {
+            return isset($movie['poster_path']) && !empty($movie['poster_path']);
+        });
+
+        if (count($moviesWithPosters) > 0) {
+            // Select a random movie from the filtered list
+            $data = $moviesWithPosters[array_rand($moviesWithPosters)];
+            return view('landing_page', compact('data'));
+        } else {
+            return redirect()->route('landing_page')->with('error', 'No high-rated movies with posters found.');
+        }
+    }
 }

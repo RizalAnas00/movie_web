@@ -42,7 +42,6 @@
             </div>
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
                 <div class="relative mt-3 md:hidden">
-
                     <!--search-bar-->
                     <form action="{{ route('movie.search') }}" method="GET" class="flex items-center w-full">
                         <input type="text" name="title" class="block w-full p-2 pl-4 text-sm text-gray-900 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
@@ -50,14 +49,16 @@
                             <img src="{{ asset('images/searchlogo.svg') }}">
                         </button>
                     </form>
+                </div>
+            </div>
         </div>
     </header>
     
-    <main class="container mx-auto p-4">
-        @yield('content')
+    <main class="max-w-screen-2xl mx-auto relative">
+            @yield('content')
     </main>
     
-    <footer class="bg-gray-800 p-5 mt-8 h-full">
+    <footer class="bg-gray-800 p-5 h-full">
         <div class="text-center">
             <p class="font-museo lg:text-4xl max-sm:text-3xl">Get In Touch</p>
             <div class="flex justify-center space-x-5 my-3">
