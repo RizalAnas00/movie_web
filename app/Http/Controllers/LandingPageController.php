@@ -7,18 +7,10 @@ use Illuminate\Support\Facades\Http;
 
 class LandingPageController extends Controller
 {
-    public function show(){
+    public function show()
+    {
         return view("landing_page");
     }
-
-    public function demo(){
-        $tmdb_id = 436270; //Black Adam (2022) Movie TMDB ID
-        $data = Http::asJson()
-            ->get(config('services.tmdb.endpoint').'movie/'.$tmdb_id. '?api_key='.config('services.tmdb.api'));
-            
-        return view('landing_page',compact('data'));
-    }
-
 
     public function searchMovie(Request $request)
     {
@@ -77,12 +69,26 @@ class LandingPageController extends Controller
             // Filter the director
             $director = collect($creditsData['crew'])->firstWhere('job', 'Director');
 
+            // Fetch recommended movies based on genres
+            $genreIds = implode(',', $data['genre_ids']);
+
+            $recommendationsResponse = Http::asJson()->get(config('services.tmdb.endpoint') . 'discover/movie', [
+                'api_key' => config('services.tmdb.api'),
+                'with_genres' => $genreIds,
+                'vote_average.gte' => 4,
+                'vote_count.gte' => 200,
+                'sort_by' => 'vote_count.desc',
+                'page' => 1
+            ]);
+
+            $recommendations = $recommendationsResponse->json()['results'];
+
             return view('landing_page', [
                 'data' => $data,
                 'director' => $director ? $director['name'] : 'Director not available',
+                'recommendations' => $recommendations
             ]);
-        } 
-        else {
+        } else {
             return redirect()->route('landing_page')->with('error', 'No high-rated movies with posters found.');
         }
     }

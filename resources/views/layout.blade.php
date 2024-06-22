@@ -54,7 +54,7 @@
         </div>
     </header>
     
-    <main class="max-w-screen-2xl mx-auto relative">
+    <main class="max-w-screen-2xl xl mx-auto mb-auto">
             @yield('content')
     </main>
     
@@ -81,3 +81,4 @@
     </footer>
 </body>
 </html>
+
