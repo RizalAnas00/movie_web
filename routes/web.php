@@ -4,8 +4,8 @@ use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
 
 // Search
-Route::post('/search', [LandingPageController::class, 'searchMovie'])->name('movie.search');
-Route::get('/searchMovie', [LandingPageController::class, 'searchMovie'])->name('movie.search.get');
+Route::post('/', [LandingPageController::class,'searchMovie']);
+Route::get('/searchMovie', [LandingPageController::class, 'searchMovie'])->name('movie.search');
 
 // Landing page
 Route::get('/', [LandingPageController::class, 'index'])->name('landing.page');

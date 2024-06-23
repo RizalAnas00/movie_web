@@ -1,8 +1,15 @@
-@extends('layout')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seacrh Movie</title>
+    @vite('resources/css/app.css')
+</head>
+<body class="flex flex-col min-h-screen bg-gray-900 relative">
 
-@section('title', 'Search Results')
+    @include('header')
 
-@section('content')
     <h1 class="text-2xl font-bold mb-4">Search Results</h1>
     
     @if(session('error'))
@@ -29,4 +36,8 @@
     @else
         <p>No movies found for "{{ request()->input('title') }}".</p>
     @endif
-@endsection
+
+    @include('footer')
+    
+</body>
+</html>
