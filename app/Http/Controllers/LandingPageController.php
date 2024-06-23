@@ -36,9 +36,21 @@ class LandingPageController extends Controller
         return view('rslt_search_movie', compact('movies'));
     }
 
-    public function showRandomMovie()
+    public function index()
     {
-        // Fetch movies with a rating above 7
+        // Replace this URL with the actual endpoint to get genres
+        $genresresponse = Http::asJson()
+        ->get(config('services.tmdb.endpoint') . 'genre/movie/list', [
+            'api_key' => config('services.tmdb.api'),
+        ]);
+
+        if ($genresresponse->successful()) {
+            $genres = $genresresponse->json()['genres']; // Assuming the API returns a 'genres' key
+        } else {
+            $genres = [];
+        }
+
+        // Fetch movies with a rating above 4
         $response = Http::asJson()
             ->get(config('services.tmdb.endpoint') . 'discover/movie', [
                 'api_key' => config('services.tmdb.api'),
@@ -86,7 +98,8 @@ class LandingPageController extends Controller
             return view('landing_page', [
                 'data' => $data,
                 'director' => $director ? $director['name'] : 'Director not available',
-                'recommendations' => $recommendations
+                'recommendations' => $recommendations,
+                'genres' => $genres,
             ]);
         } else {
             return redirect()->route('landing_page')->with('error', 'No high-rated movies with posters found.');
