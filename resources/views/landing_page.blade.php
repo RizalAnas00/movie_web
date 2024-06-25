@@ -44,11 +44,11 @@
                     <!-- Scroll Button -->
     
                     {{-- recommendation-list --}}
-                    <div class="pt-4 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
+                    <div class="py-4 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
                         @foreach($recommendations as $movie)
-                        <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden">
+                        <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden outline-none outline-4 hover:outline-[#D65A31]">
                             <img src="https://www.themoviedb.org/t/p/w500{{ $movie['backdrop_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
-                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 text-center backdrop-blur-sm pointer-events-none">
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 text-left backdrop-blur-sm pointer-events-none">
                                 <h3 class="text-lg text-white font-bold">{{ $movie['title'] }}</h3>
                                 <p class="text-sm text-gray-400">({{ date('Y', strtotime($movie['release_date'])) }})</p>
                             </div>
@@ -74,17 +74,17 @@
                 <!-- Container Genres -->
                 <div class="relative w-full">
                     <!-- Scroll Buttons -->
-                    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeft">
+                    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeftGenre">
                         <img src="{{ asset('images/left.svg') }}" alt="Arrow Left" class="w-6 h-6">
                     </button>
                     <!-- Scroll Buttons -->
                 
                     {{-- Genre List --}}
-                    <div class="pt-4 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="genre-list">
+                    <div class="py-6 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="genre-list">
                         @if(isset($genres) && count($genres) > 0)
                             @foreach($genres as $genre)
-                                <div class="bg-gray-800 p-4 rounded-lg text-center">
-                                    <h2 class="text-xl text-white">{{ $genre['name'] }}</h2>
+                                <div class="flex-none bg-[#D65A31] w-40 h-16 flex items-center justify-center rounded-lg text-center font-museo">
+                                    <h3 class="text-xl text-white">{{ $genre['name'] }}</h3>
                                 </div>
                             @endforeach
                         @else
@@ -94,7 +94,7 @@
                     {{-- Genre List --}}
                 
                     <!-- Scroll Buttons -->
-                    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRight">
+                    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRightGenre">
                         <img src="{{ asset('images/right.svg') }}" alt="Arrow Right" class="w-6 h-6">
                     </button>
                     <!-- Scroll Buttons -->
@@ -106,31 +106,47 @@
     
     @include('footer')
 
-<!-- Button Logic Scroll Recomendation List-->
+<!-- Button Logic Scroll -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const rightButtons = document.querySelectorAll('.slideRight');
-        const leftButtons = document.querySelectorAll('.slideLeft');
-        const recommendationList = document.getElementById('recommendation-list');
+        const scrollConfigurations = [
+            {
+                leftButtonClass: '.slideLeft',
+                rightButtonClass: '.slideRight',
+                listId: 'recommendation-list',
+            },
+            {
+                leftButtonClass: '.slideLeftGenre',
+                rightButtonClass: '.slideRightGenre',
+                listId: 'genre-list',
+            }
+        ];
 
-        rightButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                recommendationList.scrollBy({
-                    left: 800, // Adjust the value based on your needs
-                    behavior: 'smooth'
+        scrollConfigurations.forEach(config => {
+            const rightButtons = document.querySelectorAll(config.rightButtonClass);
+            const leftButtons = document.querySelectorAll(config.leftButtonClass);
+            const list = document.getElementById(config.listId);
+
+            rightButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    list.scrollBy({
+                        left: 800, // Adjust the value based on your needs
+                        behavior: 'smooth'
+                    });
                 });
             });
-        });
 
-        leftButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                recommendationList.scrollBy({
-                    left: -800, // Adjust the value based on your needs
-                    behavior: 'smooth'
+            leftButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    list.scrollBy({
+                        left: -800, // Adjust the value based on your needs
+                        behavior: 'smooth'
+                    });
                 });
             });
         });
     });
 </script>
+
 </body>
 </html>
