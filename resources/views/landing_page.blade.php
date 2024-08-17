@@ -44,12 +44,12 @@
                     <!-- Scroll Button -->
     
                     {{-- recommendation-list --}}
-                    <div class="py-4 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
+                    <div class="py-4 px-2 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
                         @foreach($recommendations as $movie)
                         <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden outline-none outline-4 hover:outline-[#D65A31]">
                             <img src="https://www.themoviedb.org/t/p/w500{{ $movie['backdrop_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
                             <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 text-left backdrop-blur-sm pointer-events-none">
-                                <h3 class="text-lg text-white font-bold">{{ $movie['title'] }}</h3>
+                                <h3 class="text-md text-white font-bold truncate">{{ $movie['title'] }}</h3>
                                 <p class="text-sm text-gray-400">({{ date('Y', strtotime($movie['release_date'])) }})</p>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                 @endif
     
                 <div>
-                    <h2 class="text-white text-lg lg:text-2xl font-normal font-mono text-left pb-4 pt-12">All Genres</h2>
+                    <h2 class="text-white text-lg lg:text-2xl font-normal font-mono text-left pb-4 pt-8">All Genres</h2>
                 </div>
     
                 <!-- Container Genres -->
@@ -80,11 +80,11 @@
                     <!-- Scroll Buttons -->
                 
                     {{-- Genre List --}}
-                    <div class="py-6 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="genre-list">
+                    <div class="py-6 px-2 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="genre-list">
                         @if(isset($genres) && count($genres) > 0)
                             @foreach($genres as $genre)
-                                <div class="flex-none bg-[#D65A31] w-40 h-16 flex items-center justify-center rounded-lg text-center font-museo">
-                                    <h3 class="text-xl text-white">{{ $genre['name'] }}</h3>
+                                <div class="flex-none bg-[#D65A31] w-40 h-16 flex items-center justify-center rounded-lg text-center font-museo text-white hover:bg-[#D65A31] outline-none hover:outline-white">
+                                    <h3 class="text-xl ">{{ $genre['name'] }}</h3>
                                 </div>
                             @endforeach
                         @else
@@ -100,6 +100,41 @@
                     <!-- Scroll Buttons -->
                 </div>
     
+                <div>
+                    <h2 class="text-white text-lg lg:text-2xl font-normal font-mono text-left pb-4 pt-8">This Year Box Office</h2>
+                </div>
+
+                <!-- container rekomendasi tahun ini  -->
+                <div class="relative w-full">
+    
+                    <!-- Scroll Button -->
+                    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeft">
+                        <img src="{{ asset('images/left.svg') }}" alt="Arrow Left" class="w-6 h-6">
+                    </button>
+                    <!-- Scroll Button -->
+    
+                    {{-- recommendation-list --}}
+                    <div class="py-4 px-2 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
+                        @foreach($recommendations as $movie)
+                        <a href="{{ route('movie.detail', $movie['id']) }}">
+                        <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden outline-none outline-4 hover:outline-[#D65A31]">
+                            <img src="https://www.themoviedb.org/t/p/w500{{ $movie['backdrop_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 text-left backdrop-blur-sm pointer-events-none">
+                                <h3 class="text-lg text-white font-bold">{{ $movie['title'] }}</h3>
+                                <p class="text-sm text-gray-400">({{ date('Y', strtotime($movie['release_date'])) }})</p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    {{-- recommendation-list --}}
+    
+                    <!-- Scroll Button -->
+                    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRight">
+                        <img src="{{ asset('images/right.svg') }}" alt="Arrow Right" class="w-6 h-6">
+                    </button>
+                    <!-- Scroll Button -->
+                </div>
+
             </div>
         </div>
     </main>
