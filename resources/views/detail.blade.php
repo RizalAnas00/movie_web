@@ -47,8 +47,10 @@
                     
                     <!-- Production Companies List -->
                     <div class="flex w-full mb-2">
-                        <span class="font-semibold text-white">Production Companies :</span>
-                        <div class="text-gray-400 ml-2">
+                        <div class="whitespace-nowrap text-left">
+                            <h1 class="font-semibold text-white">Production Companies :</h1>
+                        </div>
+                        <div class="text-gray-400 text-left ml-1">
                             @if(!empty($movie['production_companies']))
                                 <span>
                                     {{ implode(' , ' , array_column($movie['production_companies'], 'name')) }}

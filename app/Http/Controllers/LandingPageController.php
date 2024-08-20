@@ -95,11 +95,23 @@ class LandingPageController extends Controller
 
             $recommendations = $recommendationsResponse->json()['results'];
 
+            $movieThisYear = Http::asJson()->get(config('services.tmdb.endpoint') . 'discover/movie', [
+                'api_key' => config('services.tmdb.api'),
+                'primary_release_year' => date('Y'),
+                'with_genres' => $genreIds,
+                'popularity.gte' => 10000,
+                'sort_by' => 'vote_count.desc',
+                'page' => 1
+            ]);
+
+            $movieThisYear = $movieThisYear->json()['results'];
+
             return view('landing_page', [
                 'data' => $data,
                 'director' => $director ? $director['name'] : 'Director not available',
                 'recommendations' => $recommendations,
                 'genres' => $genres,
+                'movieThisYear' => $movieThisYear
             ]);
         } else {
             return redirect()->route('landing_page')->with('error', 'No high-rated movies with posters found.');

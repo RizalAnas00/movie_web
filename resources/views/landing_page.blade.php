@@ -46,6 +46,7 @@
                     {{-- recommendation-list --}}
                     <div class="py-4 px-2 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
                         @foreach($recommendations as $movie)
+                        <a href="{{ route('movie.detail', $movie['id']) }}">
                         <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden outline-none outline-4 hover:outline-[#D65A31]">
                             <img src="https://www.themoviedb.org/t/p/w500{{ $movie['backdrop_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
                             <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 text-left backdrop-blur-sm pointer-events-none">
@@ -108,14 +109,14 @@
                 <div class="relative w-full">
     
                     <!-- Scroll Button -->
-                    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeft">
+                    <button class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideLeftThisYear">
                         <img src="{{ asset('images/left.svg') }}" alt="Arrow Left" class="w-6 h-6">
                     </button>
                     <!-- Scroll Button -->
     
                     {{-- recommendation-list --}}
-                    <div class="py-4 px-2 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="recommendation-list">
-                        @foreach($recommendations as $movie)
+                    <div class="py-4 px-2 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="thisyear-list">
+                        @foreach($movieThisYear as $movie)
                         <a href="{{ route('movie.detail', $movie['id']) }}">
                         <div class="flex-none w-96 h-56 bg-gray-800 rounded-xl shadow-lg relative overflow-hidden outline-none outline-4 hover:outline-[#D65A31]">
                             <img src="https://www.themoviedb.org/t/p/w500{{ $movie['backdrop_path'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover rounded">
@@ -129,7 +130,7 @@
                     {{-- recommendation-list --}}
     
                     <!-- Scroll Button -->
-                    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRight">
+                    <button class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 focus:outline-none slideRightThisYear">
                         <img src="{{ asset('images/right.svg') }}" alt="Arrow Right" class="w-6 h-6">
                     </button>
                     <!-- Scroll Button -->
@@ -149,6 +150,11 @@
                 leftButtonClass: '.slideLeft',
                 rightButtonClass: '.slideRight',
                 listId: 'recommendation-list',
+            },
+            {
+                leftButtonClass: '.slideLeftThisYear',
+                rightButtonClass: '.slideRightThisYear',
+                listId: 'thisyear-list',
             },
             {
                 leftButtonClass: '.slideLeftGenre',
