@@ -10,8 +10,9 @@ Route::get('/', [LandingPageController::class, 'index'])->name('landing.page');
 Route::group(['prefix' => 'movie'], function () {
 
     Route::get('/searchMovie', [LandingPageController::class, 'searchMovie'])->name('movie.search');
+    Route::get('/searchByGenre/{id}', [LandingPageController::class, 'searchByGenre'])->name('movie.genre');
     Route::get('/detail/{id}', [MovieController::class, 'detail'])->name('movie.detail');
-    Route::get('/genre/{id}', [MovieController::class, 'byGenre'])->name('movie.genre');
+    // Route::get('/genre/{id}', [MovieController::class, 'byGenre'])->name('movie.genre');
 });
 
 

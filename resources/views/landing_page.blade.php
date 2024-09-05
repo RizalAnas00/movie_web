@@ -53,6 +53,7 @@
                                 <h3 class="text-md text-white font-bold truncate">{{ $movie['title'] }}</h3>
                                 <p class="text-sm text-gray-400">({{ date('Y', strtotime($movie['release_date'])) }})</p>
                             </div>
+                        </a>
                         </div>
                         @endforeach
                     </div>
@@ -84,9 +85,11 @@
                     <div class="py-6 px-2 flex overflow-x-auto gap-5 no-scrollbar w-full scroll-smooth" id="genre-list">
                         @if(isset($genres) && count($genres) > 0)
                             @foreach($genres as $genre)
-                                <div class="flex-none bg-[#D65A31] w-40 h-16 flex items-center justify-center rounded-lg text-center font-museo text-white hover:bg-[#D65A31] outline-none hover:outline-white">
-                                    <h3 class="text-xl ">{{ $genre['name'] }}</h3>
-                                </div>
+                                <a href="{{ route('movie.genre', $genre['id']) }}">
+                                    <div class="flex-none bg-[#D65A31] w-40 h-16 flex items-center justify-center rounded-lg text-center font-museo text-white hover:bg-[#D65A31] outline-none hover:outline-white">
+                                        <h3 class="text-xl ">{{ $genre['name'] }}</h3>
+                                    </div>
+                                </a>
                             @endforeach
                         @else
                             <p class="text-white">No genres available.</p>
@@ -125,6 +128,7 @@
                                 <p class="text-sm text-gray-400">({{ date('Y', strtotime($movie['release_date'])) }})</p>
                             </div>
                         </div>
+                        </a>
                         @endforeach
                     </div>
                     {{-- recommendation-list --}}
