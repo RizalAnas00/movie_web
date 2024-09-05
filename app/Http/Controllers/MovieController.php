@@ -24,6 +24,8 @@ class MovieController extends Controller
         $creditsData = $creditsResponse->json();
         
         $director = collect($creditsData['crew'])->firstWhere('job', 'Director');
+        $cinematographer = collect($creditsData['crew'])->firstWhere('job', 'Director of Photography');
+        $producer = collect($creditsData['crew'])->firstWhere('job', 'Producer');
 
         //get the age rating
         $ageRatingResponse = Http::asJson()->get(config('services.tmdb.endpoint') . 'movie/' . $movie['id'] . '/release_dates?api_key=' . config('services.tmdb.api'));
@@ -36,7 +38,7 @@ class MovieController extends Controller
         // Base URL for images
         $baseImageUrl = 'https://image.tmdb.org/t/p/w500/';
         
-        return view('detail', compact('movie', 'genres', 'director', 'baseImageUrl', 'ratingForCountry'));
+        return view('detail', compact('movie', 'genres', 'director', 'baseImageUrl', 'ratingForCountry', 'cinematographer', 'producer'));
         
     }
 }

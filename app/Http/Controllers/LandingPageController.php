@@ -17,7 +17,7 @@ class LandingPageController extends Controller
         $title = $request->input('title');
 
         if (empty($title)) {
-            return redirect()->route('landing_page')->with('error', 'Please enter a movie title.');
+            return redirect()->route('landing.page')->with('error', 'Please enter a movie title.');
         }
 
         // Fetch movies from TMDB API based on search query
@@ -25,10 +25,30 @@ class LandingPageController extends Controller
             ->get(config('services.tmdb.endpoint') . 'search/movie', [
                 'api_key' => config('services.tmdb.api'),
                 'query' => $title,
+                'include_adult' => false,
             ]);
 
         if ($response->failed()) {
-            return redirect()->route('landing_page')->with('error', 'Failed to fetch movie data.');
+            return redirect()->route('landing.page')->with('error', 'Failed to fetch movie data.');
+        }
+
+        $movies = $response->json()['results'];
+
+        return view('rslt_search_movie', compact('movies'));
+    }
+
+    public function searchByGenre(Request $request, $id)
+    {
+        $response = Http::asJson()
+            ->get(config('services.tmdb.endpoint') . 'discover/movie', [
+                'api_key' => config('services.tmdb.api'),
+                'with_genres' => $id,
+                'include_adult' => false,
+                'sort_by' => 'popularity.desc'
+            ]);
+
+        if ($response->failed()) {
+            return redirect()->route('landing.page')->with('error', 'Failed to fetch movie data.');
         }
 
         $movies = $response->json()['results'];
@@ -38,14 +58,13 @@ class LandingPageController extends Controller
 
     public function index()
     {
-        // Replace this URL with the actual endpoint to get genres
         $genresresponse = Http::asJson()
         ->get(config('services.tmdb.endpoint') . 'genre/movie/list', [
             'api_key' => config('services.tmdb.api'),
         ]);
 
         if ($genresresponse->successful()) {
-            $genres = $genresresponse->json()['genres']; // Assuming the API returns a 'genres' key
+            $genres = $genresresponse->json()['genres']; 
         } else {
             $genres = [];
         }
@@ -56,11 +75,12 @@ class LandingPageController extends Controller
                 'api_key' => config('services.tmdb.api'),
                 'vote_average.gte' => 4,
                 'vote_count.gte' => 200,
+                'include_adult' => false,
                 'sort_by' => 'vote_count.desc'
             ]);
 
         if ($response->failed()) {
-            return redirect()->route('landing_page')->with('error', 'Failed to fetch movie data.');
+            return redirect()->route('landing.page')->with('error', 'Failed to fetch movie data.');
         }
 
         $movies = $response->json()['results'];
@@ -88,8 +108,9 @@ class LandingPageController extends Controller
                 'api_key' => config('services.tmdb.api'),
                 'with_genres' => $genreIds,
                 'vote_average.gte' => 4,
+                'include_adult' => false,
                 'vote_count.gte' => 200,
-                'sort_by' => 'vote_count.desc',
+                'sort_by' => 'popularity.desc',
                 'page' => 1
             ]);
 
@@ -100,6 +121,7 @@ class LandingPageController extends Controller
                 'primary_release_year' => date('Y'),
                 'with_genres' => $genreIds,
                 'popularity.gte' => 10000,
+                'include_adult' => false,
                 'sort_by' => 'vote_count.desc',
                 'page' => 1
             ]);
