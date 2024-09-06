@@ -1,7 +1,7 @@
 
-    <footer class="bg-[#464A52] p-5 w-full h-auto bottom-0 ">
+    <footer class="bg-[#222831] p-5 w-full h-auto bottom-0 ">
         <div class="text-center">
-            <p class="font-museo lg:text-4xl max-sm:text-3xl">Get In Touch</p>
+            <p class="font-museo lg:text-4xl max-sm:text-3xl text-gray-200">Get In Touch</p>
             <div class="flex justify-center space-x-5 my-4">
                 <a href="https://www.instagram.com/rizalsaja___" >
                     <img src="{{ asset('images/insta.svg') }}" class="max-sm:size-6 max-md:size-7 lg:size-8">
