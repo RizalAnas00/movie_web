@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Movie</title>
+    <title>{{ request()->input('title') ? request()->input('title').' - MovieList' : 'Search Movie - MovieList' }}</title>
+    <meta name="description" content="{{ request()->input('title') ? 'Dive into the world of '.request()->input('title').' with our movie detail page. Find out about the plot, cast, and more.' : 'Explore a wide variety of movies, their plots, cast, and much more on MovieList.' }}">
+    <meta name="keywords" content="{{ request()->input('title') ? 'movie, detail, '.request()->input('title').', genres, cast, plot, search' : 'movie, detail, genres, cast, plot, search, find movies' }}">
+    
     @vite('resources/css/app.css')
     <style>
         /* Ensure full height for html and body */

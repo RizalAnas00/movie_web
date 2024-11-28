@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Movie</title>
+    <title>{{ $movie['title'].' - MovieList' ?? 'Detail Movie - MovieList' }}</title>
+    <meta name="description" content="Dive into the world of {{ $movie['title'] }} with our movie detail page. Find out about the plot, cast, and more.">
+    <meta name="keywords" content="movie, detail, {{ $movie['title'] }}, genres, cast, plot">
+
     @vite('resources/css/app.css')
     <style>
         body::before {

@@ -11,7 +11,9 @@
     <header class="bg-[#464A52] p-2 top-0 w-full shadow-[black] shadow-sm sticky z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <div class="flex items-center">
-                <h1 class="text-white text-2xl lg:text-4xl font-semibold font-museo">MovieList</h1>
+                <a href="{{ route('landing.page') }}" class="text-white text-2xl lg:text-4xl font-semibold font-museo">
+                    MovieList
+                </a>                
                 <img src="{{ asset('images/logo1.svg') }}" alt="Logo" class="ml-2 w-6 lg:w-8">
             </div>
             <div class="flex md:order-2">
