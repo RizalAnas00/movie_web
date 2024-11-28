@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -110,30 +111,53 @@ class LandingPageController extends Controller
                 'vote_average.gte' => 4,
                 'include_adult' => false,
                 'vote_count.gte' => 200,
-                'sort_by' => 'popularity.desc',
+                'sort_by' => 'vote_count.desc',
                 'page' => 1
             ]);
 
             $recommendations = $recommendationsResponse->json()['results'];
 
+            //fetch movies this year
             $movieThisYear = Http::asJson()->get(config('services.tmdb.endpoint') . 'discover/movie', [
                 'api_key' => config('services.tmdb.api'),
                 'primary_release_year' => date('Y'),
                 'with_genres' => $genreIds,
                 'popularity.gte' => 10000,
                 'include_adult' => false,
+                'vote_count.gte' => 100,
                 'sort_by' => 'vote_count.desc',
                 'page' => 1
             ]);
 
             $movieThisYear = $movieThisYear->json()['results'];
 
+            //coming soon
+            $comingSoonMovies = Http::asJson()->get(config('services.tmdb.endpoint') . 'movie/upcoming', [
+                'api_key' => config('services.tmdb.api'),
+                'page' => 1,
+            ]);
+        
+            // Convert the response to JSON
+            $comingSoonMovies = $comingSoonMovies->json()['results'];
+        
+            // Get today's date for filtering
+            $today = Carbon::today()->format('Y-m-d');
+        
+            // Filter the movies based on today's date (or any custom logic for maximum)
+            $filteredMovies = collect($comingSoonMovies)->filter(function ($movie) use ($today) {
+                $releaseDate = Carbon::parse($movie['release_date']);
+                
+                // Only include movies with a release date less than or equal to today
+                return $releaseDate->lte($today);
+            });        
+
             return view('landing_page', [
                 'data' => $data,
                 'director' => $director ? $director['name'] : 'Director not available',
                 'recommendations' => $recommendations,
                 'genres' => $genres,
-                'movieThisYear' => $movieThisYear
+                'movieThisYear' => $movieThisYear,
+                'comingSoonMovies' => $filteredMovies
             ]);
         } else {
             return redirect()->route('landing_page')->with('error', 'No high-rated movies with posters found.');
