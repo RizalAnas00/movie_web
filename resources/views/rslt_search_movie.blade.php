@@ -58,10 +58,10 @@
         @endif
 
         @if(count($movies) > 0)
-            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-6 mb-6">
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-7 mx-6 mb-6">
                 @foreach($movies as $movie)
                     <a href="{{ route('movie.detail', $movie['id']) }}">
-                        <div class="bg-[#1c1d1f]/70 p-3 backdrop-blur-xl rounded flex flex-col items-center shadow-[#161617]/80 shadow-lg hover:border-[#D65A31] hover::border-opacity-60 hover:border-2 hover:shadow-[#D65A31] hover:shadow-lg hover:backdrop-blur-sm h-full">
+                        <div class="bg-[#1c1d1f]/70 p-3 backdrop-blur-xl rounded flex flex-col items-center shadow-[#161617]/80 shadow-lg transition-all duration-300 ease-in-out border-2 border-transparent hover:border-[#D65A31] hover:border-opacity-80 hover:shadow-[#D65A31] hover:shadow-lg hover:backdrop-blur-sm h-full">
                             @if($movie['poster_path'])
                                 <img src="https://www.themoviedb.org/t/p/w220_and_h330_face{{ $movie['poster_path'] }}" alt="Poster" class="rounded mb-4">
                             @else

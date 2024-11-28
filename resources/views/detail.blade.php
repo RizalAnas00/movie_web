@@ -45,7 +45,7 @@
     @endif
 
     <div class="content-container container mx-auto p-8">
-        <div class="bg-[#464A52] p-6 rounded-lg shadow-xl shadow-black/50 backdrop-blur-xl bg-[#32353b]/40">
+        <div class="p-6 rounded-lg shadow-xl shadow-black/50 backdrop-blur-xl bg-[#32353b]/50">
             <!-- Konten detail film -->
             <div class="flex flex-col md:flex-row md:items-start md:justify-center">
                 <!-- Movie Title (Displayed above the poster on smaller screens) -->
@@ -86,25 +86,25 @@
                     <!-- Producer -->
                     <div class="flex flex-col sm:flex-row mb-2">
                         <span class="font-semibold text-white">Producer :</span>
-                        <span class="text-gray-400 sm:ml-2">{{ $producer['name'] ?? 'N/A'}}</span>
+                        <span class="text-gray-300 sm:ml-2">{{ $producer['name'] ?? 'N/A'}}</span>
                     </div>
     
                     <!-- Cinematographer -->
                     <div class="flex flex-col sm:flex-row mb-2">
                         <span class="font-semibold text-white">Cinematographer :</span>
-                        <span class="text-gray-400 sm:ml-2">{{ $cinematographer['name'] ?? 'N/A'}}</span>
+                        <span class="text-gray-300 sm:ml-2">{{ $cinematographer['name'] ?? 'N/A'}}</span>
                     </div>
     
                     <!-- Release Date -->
                     <div class="flex flex-col sm:flex-row mb-2">
                         <span class="font-semibold text-white">Release Date :</span>
-                        <span class="text-gray-400 sm:ml-2">{{ $movie['release_date'] ?? 'N/A'}}</span>
+                        <span class="text-gray-300 sm:ml-2">{{ $movie['release_date'] ?? 'N/A'}}</span>
                     </div>
                     
                     <!-- Production Companies List -->
                     <div class="flex flex-col sm:flex-row md:flex-col mb-2">
                         <span class="font-semibold text-white">Production Companies :</span>
-                        <span class="text-gray-400 mt-2 sm:mt-0 sm:ml-1">
+                        <span class="text-gray-300 mt-2 sm:mt-0 sm:ml-1">
                             @if(!empty($movie['production_companies']))
                                 {{ implode(' , ',array_column($movie['production_companies'], 'name')) }}
                             @else
@@ -116,25 +116,25 @@
                     <!-- Budget -->
                     <div class="flex flex-col sm:flex-row mb-2">
                         <span class="font-semibold text-white">Budget :</span>
-                        <span class="text-gray-400 sm:ml-2">${{ number_format($movie['budget'], 0, ',', '.') ?? 'N/A'}}</span>
+                        <span class="text-gray-300 sm:ml-2">${{ number_format($movie['budget'], 0, ',', '.') ?? 'N/A'}}</span>
                     </div>
     
                     <!-- Revenue -->
                     <div class="flex flex-col sm:flex-row mb-2">
                         <span class="font-semibold text-white">Revenue :</span>
-                        <span class="text-gray-400 sm:ml-2">${{ number_format($movie['revenue'], 0, ',', '.') ?? 'N/A'}}</span>
+                        <span class="text-gray-300 sm:ml-2">${{ number_format($movie['revenue'], 0, ',', '.') ?? 'N/A'}}</span>
                     </div>
     
                     <!-- Runtime -->
                     <div class="flex flex-col sm:flex-row mb-2">
                         <span class="font-semibold text-white">Runtime :</span>
-                        <span class="text-gray-400 sm:ml-2">{{ $movie['runtime'] ?? 'N/A'}} Minutes</span>
+                        <span class="text-gray-300 sm:ml-2">{{ $movie['runtime'] ?? 'N/A'}} Minutes</span>
                     </div>
     
                     <!-- Status -->
                     <div class="flex flex-col sm:flex-row mb-2">
                         <span class="font-semibold text-white">Status :</span>
-                        <span class="text-gray-400 sm:ml-2">{{ $movie['status'] ?? 'N/A'}}</span>
+                        <span class="text-gray-300 sm:ml-2">{{ $movie['status'] ?? 'N/A'}}</span>
                     </div>
                 </div>
             </div>

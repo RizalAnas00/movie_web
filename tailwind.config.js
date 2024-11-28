@@ -11,9 +11,12 @@ export default {
   ],
   theme: {
     extend: {
+      scale: {
+        '97': '0.97', // Tambahkan custom scale 97
+      },
       fontFamily: {
         museo: ['MuseoModerno', 'Arial','sans-serif'],
+      },
     },
-  },
   plugins: [],
 }}
